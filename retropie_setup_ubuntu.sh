@@ -259,7 +259,7 @@ function install_latest_nvidia_drivers() {
     echo "--------------------------------------------"
     echo "- Install Latest Nvidia Drivers"
     echo "--------------------------------------------"
-    apt-get -y install ubuntu-drivers-common
+    apt-get -y install ubuntu-drivers-common software-properties-common
     add-apt-repository -y ppa:graphics-drivers/ppa
     ubuntu-drivers autoinstall
     echo "Done."
@@ -379,20 +379,22 @@ function restart_system_prompt() {
 # Execute OS Steps and dependencies
 enable_logging
 disable_sudo_password
+install_latest_nvidia_drivers
+install_vulkan
 install_retropie_dependencies
 install_retropie
 add_retroarch_shaders
-install_latest_intel_drivers
-install_vulkan
+#install_latest_intel_drivers
+
 hide_boot_messages
 enable_autologin_tty
-enable_plymouth_theme
+#enable_plymouth_theme
 hide_openbox_windows
 enable_autostart_xwindows
 autostart_openbox_apps
 
 # Optional steps (uncomment as needed)
-#install_latest_nvidia_drivers
+
 #update_inxi_tool
 #disable_screen_blanking
 #xrandr_force_resolution
