@@ -380,11 +380,11 @@ function restart_system_prompt() {
 enable_logging
 disable_sudo_password
 install_retropie_dependencies
-install_retropie
-add_retroarch_shaders
 #install_latest_intel_drivers
 install_latest_nvidia_drivers
 install_vulkan
+install_retropie
+add_retroarch_shaders
 hide_boot_messages
 enable_autologin_tty
 #enable_plymouth_theme
