@@ -379,13 +379,12 @@ function restart_system_prompt() {
 # Execute OS Steps and dependencies
 enable_logging
 disable_sudo_password
-install_latest_nvidia_drivers
-install_vulkan
 install_retropie_dependencies
 install_retropie
 add_retroarch_shaders
 #install_latest_intel_drivers
-
+install_latest_nvidia_drivers
+install_vulkan
 hide_boot_messages
 enable_autologin_tty
 #enable_plymouth_theme
@@ -396,7 +395,7 @@ autostart_openbox_apps
 # Optional steps (uncomment as needed)
 
 #update_inxi_tool
-#disable_screen_blanking
+disable_screen_blanking
 #xrandr_force_resolution
 #change_grub_gfxmode
 #fix_xdg_error
