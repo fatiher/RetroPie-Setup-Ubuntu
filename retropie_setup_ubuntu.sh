@@ -55,12 +55,13 @@ function install_retropie() {
     # Get Retropie Setup script and perform an install of core packages only (no emulators)
     cd $USER_HOME
     git clone --depth=1 https://github.com/RetroPie/RetroPie-Setup.git
-    $USER_HOME/RetroPie-Setup/retropie_packages.sh retroarch
-    $USER_HOME/RetroPie-Setup/retropie_packages.sh emulationstation
-    $USER_HOME/RetroPie-Setup/retropie_packages.sh retropiemenu
-    $USER_HOME/RetroPie-Setup/retropie_packages.sh runcommand
-    $USER_HOME/RetroPie-Setup/retropie_packages.sh samba
-    $USER_HOME/RetroPie-Setup/retropie_packages.sh samba install_shares
+    $USER_HOME/RetroPie-Setup/retropie_setup.sh
+    #$USER_HOME/RetroPie-Setup/retropie_packages.sh retroarch
+    #$USER_HOME/RetroPie-Setup/retropie_packages.sh emulationstation
+    #$USER_HOME/RetroPie-Setup/retropie_packages.sh retropiemenu
+    #$USER_HOME/RetroPie-Setup/retropie_packages.sh runcommand
+    #$USER_HOME/RetroPie-Setup/retropie_packages.sh samba
+    #$USER_HOME/RetroPie-Setup/retropie_packages.sh samba install_shares
     chown -R $USER:$USER $USER_HOME/RetroPie-Setup
     echo "Done."
     sleep 2
@@ -381,10 +382,10 @@ enable_logging
 disable_sudo_password
 install_retropie_dependencies
 #install_latest_intel_drivers
-install_latest_nvidia_drivers
+#install_latest_nvidia_drivers
 install_vulkan
 install_retropie
-add_retroarch_shaders
+#add_retroarch_shaders
 hide_boot_messages
 enable_autologin_tty
 #enable_plymouth_theme
