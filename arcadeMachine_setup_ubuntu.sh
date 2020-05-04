@@ -55,7 +55,7 @@ function install_retropie() {
     # Get Retropie Setup script and perform an install of core packages only (no emulators)
     cd $USER_HOME
     git clone --depth=1 https://github.com/RetroPie/RetroPie-Setup.git
-    sed 's/TARGET=mame)/TARGET=mame SUBTARGET=arcade)/g' $USER_HOME/RetroPie-Setup/scriptmodules/libretrocores/lr-mame.sh
+    sed -i 's/TARGET=mame)/TARGET=mame SUBTARGET=arcade)/g' $USER_HOME/RetroPie-Setup/scriptmodules/libretrocores/lr-mame.sh
     $USER_HOME/RetroPie-Setup/retropie_packages.sh retroarch
     $USER_HOME/RetroPie-Setup/retropie_packages.sh emulationstation
     $USER_HOME/RetroPie-Setup/retropie_packages.sh retropiemenu
