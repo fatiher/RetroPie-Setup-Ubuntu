@@ -1,24 +1,24 @@
 #! /bin/bash
 
-USER=pi
+USER=arcade
 USER_HOME=/home/$USER
 
 PLYMOUTH_THEME=retropie-pacman
 
-LOG_FILE=retropie_setup_ubuntu.log
+LOG_FILE=arcadeMachine_setup_ubuntu.log
 
 RETROPIE_CORE_DEPENDS=(
     xorg openbox pulseaudio alsa-utils menu libglib2.0-bin python-xdg
     at-spi2-core libglib2.0-bin dbus-x11 git dialog unzip xmlstarlet
 )
 RETROPIE_EXTRA_DEPENDS=(
-    openssh-server xdg-utils unclutter
+    openssh-server xdg-utils unclutter software-properties-common python
 )
 
 # Output to both console and log file
 function enable_logging() {
     echo "--------------------------------------------"
-    echo "- Output will be logged to retropie_setup_ubuntu.log"
+    echo "- Output will be logged to arcadeMachine_setup_ubuntu.log"
     echo "--------------------------------------------"
     touch $LOG_FILE
     exec > >(tee $LOG_FILE) 2>&1
@@ -42,7 +42,7 @@ function install_retropie_dependencies() {
     echo "- Update OS packages and install RetroPie dependencies"
     echo "--------------------------------------------"
     apt-get update && apt-get -y upgrade
-    apt-get -y install ${RETROPIE_CORE_DEPENDS[@]} ${RETROPIE_EXTRA_DEPENDS[@]}
+    apt-get -y install ${RETROPIE_CORE_DEPENDS[@]} ${RETROPIE_EXTRA_DEPENDS[@]} --no-install-recommends
     echo "Done."
     sleep 2
 }
@@ -55,11 +55,12 @@ function install_retropie() {
     # Get Retropie Setup script and perform an install of core packages only (no emulators)
     cd $USER_HOME
     git clone --depth=1 https://github.com/RetroPie/RetroPie-Setup.git
-    $USER_HOME/RetroPie-Setup/retropie_setup.sh
-    #$USER_HOME/RetroPie-Setup/retropie_packages.sh retroarch
-    #$USER_HOME/RetroPie-Setup/retropie_packages.sh emulationstation
-    #$USER_HOME/RetroPie-Setup/retropie_packages.sh retropiemenu
-    #$USER_HOME/RetroPie-Setup/retropie_packages.sh runcommand
+    sed 's/TARGET=mame)/TARGET=mame SUBTARGET=arcade)/g' $USER_HOME/RetroPie-Setup/scriptmodules/libretrocores/lr-mame.sh
+    $USER_HOME/RetroPie-Setup/retropie_packages.sh retroarch
+    $USER_HOME/RetroPie-Setup/retropie_packages.sh emulationstation
+    $USER_HOME/RetroPie-Setup/retropie_packages.sh retropiemenu
+    $USER_HOME/RetroPie-Setup/retropie_packages.sh runcommand
+    $USER_HOME/RetroPie-Setup/retropie_packages.sh lr-mame
     #$USER_HOME/RetroPie-Setup/retropie_packages.sh samba
     #$USER_HOME/RetroPie-Setup/retropie_packages.sh samba install_shares
     chown -R $USER:$USER $USER_HOME/RetroPie-Setup
@@ -108,7 +109,7 @@ function install_vulkan() {
     echo "--------------------------------------------"
     echo "- Installing Vulkan"
     echo "--------------------------------------------"
-    apt-get -y install mesa-vulkan-drivers
+    apt-get -y install mesa-vulkan-drivers vulkan vulkan-utils
     echo "Done."
     sleep 2
 }
@@ -137,7 +138,7 @@ function hide_boot_messages() {
     sleep 2
 }
 
-# Configure 'pi' user to autologin
+# Configure 'arcade' user to autologin
 function enable_autologin_tty() {
     echo "--------------------------------------------"
     echo "- Enabling autologin to console"
@@ -179,7 +180,6 @@ function hide_openbox_windows() {
     cat << EOF >> $USER_HOME/.bash_profile
 $GNOME_TERMINAL_SETTINGS use-theme-colors false
 $GNOME_TERMINAL_SETTINGS use-theme-transparency false
-$GNOME_TERMINAL_SETTINGS default-show-menubar false
 $GNOME_TERMINAL_SETTINGS foreground-color '#FFFFFF'
 $GNOME_TERMINAL_SETTINGS background-color '#000000'
 $GNOME_TERMINAL_SETTINGS cursor-blink-mode 'off'
@@ -260,7 +260,7 @@ function install_latest_nvidia_drivers() {
     echo "--------------------------------------------"
     echo "- Install Latest Nvidia Drivers"
     echo "--------------------------------------------"
-    apt-get -y install ubuntu-drivers-common software-properties-common
+    apt-get -y install ubuntu-drivers-common
     add-apt-repository -y ppa:graphics-drivers/ppa
     ubuntu-drivers autoinstall
     echo "Done."
@@ -381,11 +381,10 @@ function restart_system_prompt() {
 enable_logging
 disable_sudo_password
 install_retropie_dependencies
-#install_latest_intel_drivers
-#install_latest_nvidia_drivers
+install_latest_nvidia_drivers
 install_vulkan
 install_retropie
-#add_retroarch_shaders
+add_retroarch_shaders
 hide_boot_messages
 enable_autologin_tty
 #enable_plymouth_theme
@@ -394,7 +393,7 @@ enable_autostart_xwindows
 autostart_openbox_apps
 
 # Optional steps (uncomment as needed)
-
+#install_latest_intel_drivers
 #update_inxi_tool
 disable_screen_blanking
 #xrandr_force_resolution
