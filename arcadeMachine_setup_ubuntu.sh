@@ -12,7 +12,7 @@ RETROPIE_CORE_DEPENDS=(
     at-spi2-core libglib2.0-bin dbus-x11 git dialog unzip xmlstarlet
 )
 RETROPIE_EXTRA_DEPENDS=(
-    openssh-server xdg-utils unclutter software-properties-common python
+    openssh-server unclutter software-properties-common python
 )
 
 # Output to both console and log file
