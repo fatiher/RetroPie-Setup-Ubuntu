@@ -31,7 +31,7 @@ d-i netcfg/dhcp_timeout string 10
 d-i netcfg/dhcpv6_timeout string 5
 
 ### Mirror setup
-d-i mirror/country string manual
+d-i mirror/country string us
 d-i mirror/http/hostname string archive.ubuntu.com
 d-i mirror/http/directory string /ubuntu
 d-i mirror/http/proxy string
@@ -40,10 +40,10 @@ d-i mirror/http/proxy string
 d-i passwd/root-login                                       boolean     false
 d-i passwd/root-password-crypted                            password    !!
 d-i passwd/make-user                                        boolean     true
-d-i passwd/user-fullname                                    string      ArcadeMachine
-d-i passwd/username                                         string      arcade
-d-i passwd/user-password                                    password    arcade
-d-i passwd/user-password-again                              password    arcade
+d-i passwd/user-fullname                                    string      HomeForge Controller
+d-i passwd/username                                         string      homeforge
+d-i passwd/user-password                                    password    homeforge
+d-i passwd/user-password-again                              password    homeforge
 d-i passwd/user-uid                                         string
 d-i user-setup/allow-password-weak                          boolean     true
 d-i user-setup/encrypt-home                                 boolean     false
@@ -158,8 +158,8 @@ d-i preseed/late_command string \
  in-target sh -c 'echo homeforge-controller > /etc/hostname'; \
  in-target sh -c 'mkdir -p --mode=750 /home/homeforge'; \
  in-target sh -c 'chown homeforge:homeforge /home/homeforge'; \
- in-target sh -c 'wget -O /home/arcade/arcadeMachine_setup_ubuntu.sh "https://raw.githubusercontent.com/fatiher/arcadeMachine-Setup-Ubuntu/master/arcadeMachine_setup_ubuntu.sh"'; \
- in-target sh -c 'chmod +x /home/arcade/arcadeMachine_setup_ubuntu.sh'; \
+ #in-target sh -c 'wget -O /home/arcade/arcadeMachine_setup_ubuntu.sh "https://raw.githubusercontent.com/fatiher/arcadeMachine-Setup-Ubuntu/master/arcadeMachine_setup_ubuntu.sh"'; \
+ #in-target sh -c 'chmod +x /home/arcade/arcadeMachine_setup_ubuntu.sh'; \
  in-target sh -c 'eject || true';
 d-i debian-installer/splash boolean false
 d-i cdrom-detect/eject boolean true
