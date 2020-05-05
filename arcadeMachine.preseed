@@ -11,15 +11,15 @@
 ### Unattended Installation
 d-i auto-install/enable boolean true
 d-i debconf/priority select critical
-d-i debian-installer/splash boolean true
+d-i debian-installer/splash boolean false
 
 ### Localization
-d-i console-setup/ask_detect boolean true
-#d-i debian-installer/locale string en_US.UTF-8
-#d-i localechooser/supported-locales multiselect en_US.UTF-8 tr_TR.UTF-8
-#d-i keyboard-configuration/xkb-keymap select tr // Turkish Keyboard Layout
-#d-i keyboard-configuration/layoutcode string tr // Turkish Keyboard Layout
-#d-i keyboard-configuration/variantcode string
+d-i console-setup/ask_detect boolean false
+d-i debian-installer/locale string en_US.UTF-8
+d-i localechooser/supported-locales multiselect en_US.UTF-8 tr_TR.UTF-8
+d-i keyboard-configuration/xkb-keymap select tr // Turkish Keyboard Layout
+d-i keyboard-configuration/layoutcode string tr // Turkish Keyboard Layout
+d-i keyboard-configuration/variantcode string
 
 ### Network configuration
 d-i netcfg/choose_interface select auto
@@ -121,7 +121,7 @@ d-i partman-auto/choose_recipe select arcademachine
 
 ### Base system installation
 d-i base-installer/install-recommends boolean true
-d-i base-installer/kernel/image string linux-generic-hwe-20.04
+d-i base-installer/kernel/image string linux-generic
 
 # Mirror settings
 d-i mirror/country string US
@@ -158,10 +158,10 @@ d-i preseed/late_command string \
  in-target sh -c 'echo homeforge-controller > /etc/hostname'; \
  in-target sh -c 'mkdir -p --mode=750 /home/homeforge'; \
  in-target sh -c 'chown homeforge:homeforge /home/homeforge'; \
- #in-target sh -c 'wget -O /home/arcade/arcadeMachine_setup_ubuntu.sh "https://raw.githubusercontent.com/fatiher/arcadeMachine-Setup-Ubuntu/master/arcadeMachine_setup_ubuntu.sh"'; \
- #in-target sh -c 'chmod +x /home/arcade/arcadeMachine_setup_ubuntu.sh'; \
+ in-target sh -c 'wget -O /home/arcade/arcadeMachine_setup_ubuntu.sh "https://raw.githubusercontent.com/fatiher/arcadeMachine-Setup-Ubuntu/master/arcadeMachine_setup_ubuntu.sh"'; \
+ in-target sh -c 'chmod +x /home/arcade/arcadeMachine_setup_ubuntu.sh'; \
  in-target sh -c 'eject || true';
-d-i debian-installer/splash boolean true
+d-i debian-installer/splash boolean false
 d-i cdrom-detect/eject boolean true
 
 ### Reboot machine
